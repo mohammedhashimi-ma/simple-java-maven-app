@@ -1,0 +1,25 @@
+pipeline {
+
+    agent any
+
+    stages {
+
+        stage('Checkout') {
+            steps {
+                git 'https://github.com/mohammedhashimi-ma/simple-java-maven-app.git'
+            }
+        }
+
+        stage('Build & Test') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+
+        stage('Archive') {
+            steps {
+                archiveArtifacts artifacts: 'target/*.jar',
+                    fingerprint: true
+            }
+        }
+    }}
